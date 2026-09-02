@@ -34,7 +34,7 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-- PWA開発画面: `http://localhost:5173`
+- PWA開発画面: `http://localhost:8080`
 - SQLite API: `http://127.0.0.1:8080`
 - SQLite: `data/app.sqlite`
 

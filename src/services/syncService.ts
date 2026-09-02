@@ -16,7 +16,7 @@ const readJson = async (response: Response): Promise<unknown> => {
 };
 
 export class SyncService {
-  constructor(private readonly repository = new NoteRepository(), private readonly request: typeof fetch = globalThis.fetch) {}
+  constructor(private readonly repository = new NoteRepository(), private readonly request: typeof fetch = (...args) => globalThis.fetch(...args)) {}
 
   async synchronize(): Promise<SyncSummary> {
     const summary: SyncSummary = { uploaded: 0, downloaded: 0, conflicts: 0, failed: 0 };

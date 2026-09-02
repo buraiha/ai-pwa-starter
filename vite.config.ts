@@ -1,9 +1,28 @@
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
+import type { Plugin } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
 const root = fileURLToPath(new URL(".", import.meta.url));
+const devServiceWorkerReset = (): Plugin => ({
+  name: "dev-service-worker-reset",
+  apply: "serve",
+  configureServer(server) {
+    server.middlewares.use("/sw.js", (_request, response) => {
+      response.setHeader("Content-Type", "application/javascript");
+      response.setHeader("Cache-Control", "no-store");
+      response.end(`self.addEventListener("install", () => self.skipWaiting());
+self.addEventListener("activate", (event) => event.waitUntil((async () => {
+  const keys = await caches.keys();
+  await Promise.all(keys.map((key) => caches.delete(key)));
+  await self.registration.unregister();
+  const clients = await self.clients.matchAll({ type: "window" });
+  await Promise.all(clients.map((client) => client.navigate(client.url)));
+})()));`);
+    });
+  }
+});
 
 export default defineConfig({
   root,
@@ -13,6 +32,7 @@ export default defineConfig({
   },
   plugins: [
     react(),
+    devServiceWorkerReset(),
     VitePWA({
       registerType: "prompt",
       includeAssets: ["icon.svg", "icon-maskable.svg"],

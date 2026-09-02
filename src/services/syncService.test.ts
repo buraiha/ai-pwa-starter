@@ -22,9 +22,25 @@ afterEach(async () => {
   const name = database.name;
   database.close();
   await Dexie.delete(name);
+  vi.unstubAllGlobals();
 });
 
 describe("SyncService", () => {
+  it("標準fetchをWindowのメソッドとして呼び出す", async () => {
+    await repository.save({ id: "note-1", title: "端末", body: "本文" }, "2026-09-02T00:00:00.000Z");
+    const server = { id: "note-1", title: "端末", body: "本文", updatedAt: "2026-09-02T00:00:00.000Z", version: 1 };
+    const windowFetch = vi.fn(function (this: typeof globalThis, _input: RequestInfo | URL, init?: RequestInit) {
+      if (this !== globalThis) throw new TypeError("Can only call Window.fetch on instances of Window");
+      return Promise.resolve(init?.method === "POST" ? jsonResponse(server) : jsonResponse([server]));
+    });
+    vi.stubGlobal("fetch", windowFetch);
+
+    const result = await new SyncService(repository).synchronize();
+
+    expect(result).toEqual({ uploaded: 1, downloaded: 1, conflicts: 0, failed: 0 });
+    expect(windowFetch).toHaveBeenCalledTimes(2);
+  });
+
   it("pendingを送信してサーバー版を同期済みにする", async () => {
     await repository.save({ id: "note-1", title: "端末", body: "本文" }, "2026-09-02T00:00:00.000Z");
     const server = { id: "note-1", title: "端末", body: "本文", updatedAt: "2026-09-02T00:00:00.000Z", version: 1 };

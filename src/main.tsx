@@ -4,11 +4,16 @@ import { registerSW } from "virtual:pwa-register";
 import App from "./App";
 import "./styles.css";
 
-const updateSW = registerSW({
-  onNeedRefresh() {
-    if (window.confirm("新しいバージョンがあります。更新しますか？")) void updateSW(true);
-  }
-});
+if (import.meta.env.DEV && "serviceWorker" in navigator) {
+  void navigator.serviceWorker.getRegistrations()
+    .then((registrations) => Promise.all(registrations.map((registration) => registration.unregister())));
+} else {
+  const updateSW = registerSW({
+    onNeedRefresh() {
+      if (window.confirm("新しいバージョンがあります。更新しますか？")) void updateSW(true);
+    }
+  });
+}
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode><App /></StrictMode>
