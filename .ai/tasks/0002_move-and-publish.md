@@ -1,6 +1,6 @@
 # スターターを独立プロジェクトへ移動して公開する
 
-Status: partial
+Status: completed
 
 ## 目的
 
@@ -26,5 +26,5 @@ Genpo配下に作成したAI PWA Starterを、独立したプロジェクトと�
 - 移動後の`podman build -t ai-pwa-starter:publish-check .`内で、クライアント7件・サーバー3件のテストとPWAビルドが成功した。
 - `podman compose config`が成功した。
 - 公開候補に秘密鍵、代表的なGitHub/AWS/Google/Slackトークン形式、`.env`、SQLite、`node_modules`、`dist`、`tsbuildinfo`がないことを確認した。
-- GitHub上の`buraiha/ai-pwa-starter`は404で、同名リポジトリがまだ存在しないことを確認した。
-- 未完了: ローカルにGitHub CLIがなく、操作可能なブラウザとリポジトリ作成APIも利用できなかったため、GitHub publicリポジトリの作成とpushは未実施。
+- GitHub CLIと操作可能なブラウザは利用できなかったため、資格情報を出力・保存せず、既存のGit credentialをGitHub公式APIへ直接渡してpublicリポジトリを作成した。
+- `https://github.com/buraiha/ai-pwa-starter`を`origin`に設定し、`main`をpushして追跡設定した。
