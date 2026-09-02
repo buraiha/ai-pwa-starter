@@ -1,0 +1,30 @@
+:root { font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif; color: #17322f; background: #f3f5ef; font-synthesis: none; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+button, input, textarea { font: inherit; }
+button { border: 0; border-radius: .75rem; padding: .72rem 1rem; background: #176c60; color: white; font-weight: 700; cursor: pointer; }
+button:disabled { cursor: not-allowed; opacity: .5; }
+button.secondary { color: #24534c; background: #e0ece7; }
+button.danger { background: #a74337; }
+main { width: min(760px, 100%); margin: 0 auto; padding: 1.25rem; }
+header, .list-heading, .card-title, .actions { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { margin-bottom: 0; font-size: clamp(1.8rem, 7vw, 3.4rem); }
+.eyebrow { margin-bottom: .2rem; color: #438076; font-size: .72rem; font-weight: 800; letter-spacing: .16em; }
+.status, .sync { border-radius: 999px; padding: .35rem .65rem; font-size: .75rem; font-weight: 800; }
+.status.online, .sync.synced { color: #155d50; background: #d8eee6; }
+.status.offline, .sync.failed, .sync.conflict { color: #83352c; background: #f7dfd9; }
+.sync.pending { color: #735b14; background: #f3e8b9; }
+.notice, .panel, .card, .empty { padding: 1rem; border: 1px solid #cfdbd5; border-radius: 1rem; background: #fff; box-shadow: 0 8px 30px rgb(23 63 58 / 7%); }
+.notice { margin: 1.25rem 0; background: #e7f1ed; }
+.panel { margin-bottom: 1.5rem; }
+label { display: grid; gap: .4rem; margin-bottom: 1rem; font-weight: 700; }
+input, textarea { width: 100%; border: 1px solid #aebfba; border-radius: .7rem; padding: .8rem; color: inherit; background: white; }
+textarea { resize: vertical; }
+.actions { justify-content: flex-start; flex-wrap: wrap; }
+.cards { display: grid; gap: 1rem; }
+.card p { white-space: pre-wrap; }
+.card small { display: block; margin-bottom: 1rem; color: #647873; }
+.conflict { margin: 1rem 0; padding: .85rem; border-left: 4px solid #c05648; background: #fff2ee; }
+.conflict button { margin: .25rem .4rem .25rem 0; }
+@media (max-width: 520px) { header, .list-heading { align-items: flex-start; } .list-heading { margin-bottom: .7rem; } }

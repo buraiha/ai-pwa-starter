@@ -1,0 +1,9 @@
+FROM docker.io/library/node:22-alpine
+WORKDIR /app
+RUN corepack enable && chown node:node /app
+COPY --chown=node:node package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+USER node
+RUN pnpm install --frozen-lockfile
+COPY --chown=node:node . .
+EXPOSE 5173
+CMD ["pnpm", "dev"]

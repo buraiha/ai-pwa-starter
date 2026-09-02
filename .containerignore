@@ -1,0 +1,8 @@
+.git
+.ai/tasks/*
+!.ai/tasks/README.md
+node_modules
+dist
+data
+.certs
+*.tsbuildinfo
